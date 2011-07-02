@@ -1,0 +1,3 @@
+?package(volumeicon-alsa): needs="X11" \
+   section="Applications/Sound"\
+   title="volumeicon" command="/usr/bin/volumeicon"

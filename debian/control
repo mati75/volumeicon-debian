@@ -1,0 +1,26 @@
+Source: volumeicon
+Section: sound
+Priority: optional
+Maintainer: Andrew Gainer <gainer.andrew@gmail.com>
+Build-Depends: debhelper (>= 8.0.0~), autotools-dev,
+ libgtk2.0-dev, libasound2-dev
+Standards-Version: 3.9.2
+Homepage: http://softwarebakery.com/maato/volumeicon.html
+Vcs-Git: git://git.debian.org/collab-maint/volumeicon-alsa.git
+Vcs-Browser: http://git.debian.org/?p=collab-maint/volumeicon-alsa.git;a=summary
+
+Package: volumeicon-alsa
+Architecture: linux-any
+Depends: ${misc:Depends}, ${shlibs:Depends}, alsa-base
+Suggests: alsamixergui | aumix-gtk | kmix | gnome-alsamixer
+Description: systray volume icon for alsa
+ This is a lightweight volume control that sits in your systray. This
+ version is compatible with ALSA.
+ Features:
+    * Change volume by scrolling on the systray icon
+    * Ability to choose which channel to control
+    * Configurable stepsize (percentage of volume
+        increase/decrease per scrollwheel step)
+    * Several icon themes (with gtk theme as default)
+    * Configurable external mixer
+    * Volume slider

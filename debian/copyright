@@ -6,7 +6,7 @@ Files: *
 Copyright: Copyright 2010 Maato <maato@softwarebakery.com>
 License: GPL-3
 
-Files: src/keybinder.h, src/bind.c
+Files: src/keybinder.h src/bind.c
 Copyright: Copyright 2008 Alex Gravely
  Copyright 2010 Ulrik Sverdrup
 License: Expat

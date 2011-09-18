@@ -3,7 +3,7 @@
 LDFLAGS+=-Wl,--as-needed
 
 %:
-	dh $@
+	dh $@ --with autotools_dev
 
 override_dh_auto_configure:
 	dh_auto_configure -- --enable-notify

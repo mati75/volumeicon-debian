@@ -12,7 +12,8 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/volumeicon.git;a=summary
 Package: volumeicon-alsa
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}, alsa-base
-Suggests: alsamixergui | aumix-gtk | kmix | gnome-alsamixer
+Suggests: alsamixergui | aumix-gtk | kmix | gnome-alsamixer,
+  notification-daemon
 Description: systray volume icon for alsa
  This is a lightweight volume control that sits in your systray. This
  version is compatible with ALSA.

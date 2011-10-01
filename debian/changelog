@@ -1,6 +1,7 @@
 volumeicon (0.4.3-1) unstable; urgency=low
 
   * New upstream version 0.4.3.
+  * Enabled new notifications feature (via libnotify).
 
  -- Andrew Gainer <gainer.andrew@gmail.com>  Sat, 17 Sep 2011 19:10:32 +0000
 

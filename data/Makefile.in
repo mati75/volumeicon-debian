@@ -154,9 +154,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu data/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign data/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu data/Makefile
+	  $(AUTOMAKE) --foreign data/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -212,9 +212,6 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	  fi; \
 	done
-	$(MAKE) $(AM_MAKEFLAGS) \
-	  top_distdir="$(top_distdir)" distdir="$(distdir)" \
-	  dist-hook
 check-am: all-am
 check: check-am
 all-am: Makefile
@@ -312,9 +309,9 @@ uninstall-am: uninstall-local
 
 .MAKE: install-am install-strip
 
-.PHONY: all all-am check check-am clean clean-generic dist-hook \
-	distclean distclean-generic distdir dvi dvi-am html html-am \
-	info info-am install install-am install-data install-data-am \
+.PHONY: all all-am check check-am clean clean-generic distclean \
+	distclean-generic distdir dvi dvi-am html html-am info info-am \
+	install install-am install-data install-data-am \
 	install-data-local install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am install-info \
 	install-info-am install-man install-pdf install-pdf-am \
@@ -326,16 +323,13 @@ uninstall-am: uninstall-local
 
 install-data-local: uninstall-local
 	mkdir -p "$(DESTDIR)$(pkgdatadir)"; \
-	find $(EXTRA_DIST) | grep -v ".svn" | while read dir; do \
+	find $(EXTRA_DIST) | while read dir; do \
 		test -d "$$dir" && mkdir "$(DESTDIR)$(pkgdatadir)/$$dir"; \
 		test -f "$$dir" && cp "$$dir" "$(DESTDIR)$(pkgdatadir)/$$dir"; \
 	done
 
 uninstall-local:
 	-test -d "$(DESTDIR)$(pkgdatadir)" && rm -rf "$(DESTDIR)$(pkgdatadir)"
-
-dist-hook:
-	find $(distdir) -name .svn | while read line; do rm -rf "$$line"; done
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

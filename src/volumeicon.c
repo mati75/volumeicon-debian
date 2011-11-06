@@ -107,6 +107,7 @@ static void status_icon_update(gboolean mute, gboolean force);
 static void hotkey_handle(const char * key, void * user_data);
 static void volume_icon_load_icons();
 static void scale_update();
+static void notification_show();
 
 //##############################################################################
 // Type definitions
@@ -517,7 +518,10 @@ static void status_icon_on_button_release(GtkStatusIcon * status_icon,
 			GdkRectangle area;
 			gtk_status_icon_get_geometry(m_status_icon, NULL, &area, NULL);
 			x = area.x + area.width / 2 - sizex / 2;
-			y = area.y - sizey;
+			if(area.y > sizey) // popup up
+				y = area.y - sizey;
+			else // popup down
+				y = area.y + area.height;
 		}
 
 		gtk_window_move(GTK_WINDOW(m_scale_window), x, y);
@@ -564,6 +568,7 @@ static void status_icon_on_scroll_event(GtkStatusIcon * status_icon,
 	}
 	status_icon_update(m_mute, FALSE);
 	scale_update();
+	notification_show();
 }
 
 static void status_icon_on_popup_menu(GtkStatusIcon * status_icon, guint button,
@@ -674,13 +679,8 @@ static void status_icon_update(gboolean mute, gboolean ignore_cache)
 		#endif
 		
 		#ifdef COMPILEWITH_NOTIFY
-		// Don't show the notification on startup
-		if(gtk_main_level() > 0)
-		{
-			notify_notification_set_hint_int32(m_notification, "value",
-				(gint)volume);
-			notify_notification_show(m_notification, NULL);
-		}
+		notify_notification_set_hint_int32(m_notification, "value",
+			(gint)volume);
 		#endif
 
 		volume_cache = volume;
@@ -757,13 +757,20 @@ static void scale_value_changed(GtkRange * range, gpointer user_data)
 	scale_update();
 }
 
+static void notification_show()
+{
+	#ifdef COMPILEWITH_NOTIFY
+	notify_notification_show(m_notification, NULL);
+	#endif
+}
+
 static void scale_setup()
 {
 	m_scale = gtk_vscale_new_with_range(0.0, 100.0, 1.0);
 	gtk_range_set_inverted(GTK_RANGE(m_scale), TRUE);
 	gtk_scale_set_draw_value(GTK_SCALE(m_scale), FALSE);
 
-	m_scale_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	m_scale_window = gtk_window_new(GTK_WINDOW_POPUP);
 	gtk_window_set_decorated(GTK_WINDOW(m_scale_window), FALSE);
 	gtk_window_set_skip_pager_hint(GTK_WINDOW(m_scale_window), TRUE);
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(m_scale_window), TRUE);
@@ -798,6 +805,7 @@ static void hotkey_handle(const char * key, void * user_data)
 		status_icon_update(m_mute, FALSE);
 	}
 	scale_update();
+	notification_show();
 }
 
 //##############################################################################

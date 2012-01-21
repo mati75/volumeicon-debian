@@ -1,3 +1,9 @@
+volumeicon (0.4.6-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Julien Valroff <julien@debian.org>  Sat, 21 Jan 2012 16:56:28 +0100
+
 volumeicon (0.4.4-1) unstable; urgency=low
 
   * New upstream version 0.4.4

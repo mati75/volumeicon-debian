@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script
-AC_INIT([volumeicon], [0.4.4], [http://www.softwarebakery.com/maato/volumeicon.html])
+AC_INIT([volumeicon], [0.4.6], [http://www.softwarebakery.com/maato/volumeicon.html])
 
 AM_INIT_AUTOMAKE
 
@@ -42,8 +42,36 @@ AC_SUBST(ALSA_CFLAGS)
 AC_SUBST(ALSA_LIBS)
 OSS_CFLAGS=""
 else
-AC_CHECK_FILE([/usr/lib/oss/include/sys/soundcard.h], [], [AC_MSG_ERROR([The file /usr/lib/oss/include/sys/soundcard.h does not exist.])])
-OSS_CFLAGS="-DCOMPILEWITH_OSS"
+AC_ARG_WITH([oss-include-path],
+  [AS_HELP_STRING(
+    [--with-oss-include-path],
+    [location of soundcard.h, defaults to value in /etc/oss.conf and then
+        /usr/lib/oss/include/sys])],
+  [OSS_CPPFLAGS="-I$withval"; OSS_HEADER="${withval}/soundcard.h"],
+  [
+    if test -f /etc/oss.conf
+    then
+      . /etc/oss.conf
+      OSS_CPPFLAGS="-I${OSSLIBDIR}/include/sys"
+      OSS_HEADER="${OSSLIBDIR}/include/sys/soundcard.h"
+    else
+      OSS_CPPFLAGS="-I/usr/lib/oss/include/sys"
+      OSS_HEADER="/usr/lib/oss/include/sys/soundcard.h"
+    fi
+  ]
+)
+# Use AC_CHECK_HEADER with the directory determined above for soundcard.h. We
+# specify a blank but non-empty fourth parameter to prevent AC_CHECK_HEADER
+# from sticking AC_INCLUDES_DEFAULT in the test file, which may cause the test
+# to fail.
+OLD_CPPFLAGS=${CPPFLAGS}
+CPPFLAGS="${OSS_CPPFLAGS}"
+AC_CHECK_HEADER([soundcard.h], [], [AC_MSG_ERROR([could not find soundcard.h])], [])
+CPPFLAGS=${OLD_CPPFLAGS}
+
+# Pass the absolute path to the OSS header file
+OSS_CFLAGS="-DCOMPILEWITH_OSS -DOSS_HEADER=\\\"${OSS_HEADER}\\\""
+AC_SUBST([OSS_CFLAGS])
 fi
 
 if test "x${notify}" = xyes; then

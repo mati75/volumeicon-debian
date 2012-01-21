@@ -1,3 +1,19 @@
+0.4.6:
+	- Changed the default card to use from "hw:0" to "default" as pointed out
+	  by Christoph Wickert.
+
+0.4.5:
+	- Added support for 8-bit OSS sliders and improved configure.ac for OSS by
+	  Matt Boyer.
+	- Added option for using a horizontal slider and showing the numerical value
+	  of the sound level thanks to Jean-Pierre Demailly.
+
+0.4.4:
+	- Some minor fixes thanks to Matthias Frei.
+	- Show notification only when hotkeys are pressed or when scrolling on the
+	  icon.
+	- Make the volume slider popup downwards if no space is left above the icon.
+
 0.4.3:
 	- Integrated Mihail Szabolcs' fork which consisted of:
 		- Optional notification support.

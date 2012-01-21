@@ -47,6 +47,8 @@ static gchar * m_hotkey_mute = NULL;
 static int m_stepsize = 0;
 static gboolean m_lmb_slider = FALSE;
 static gboolean m_mmb_mute = FALSE;
+static gboolean m_use_horizontal_slider = FALSE;
+static gboolean m_show_sound_level = FALSE;
 static gboolean m_hotkey_up_enabled = FALSE;
 static gboolean m_hotkey_down_enabled = FALSE;
 static gboolean m_hotkey_mute_enabled = FALSE;
@@ -61,7 +63,7 @@ static void config_load_default()
 	if(!m_channel)
 		config_set_channel(NULL);
 	if(!m_card)
-		config_set_card("hw:0");
+		config_set_card("default");
 	if(!m_stepsize)
 		config_set_stepsize(5);
 	if(!m_theme)
@@ -92,6 +94,8 @@ static void config_read()
 	m_theme = g_key_file_get_value(kf, "StatusIcon", "theme", NULL);
 	m_lmb_slider = g_key_file_get_boolean(kf, "StatusIcon", "lmb_slider", NULL);
 	m_mmb_mute = g_key_file_get_boolean(kf, "StatusIcon", "mmb_mute", NULL);
+	m_use_horizontal_slider = g_key_file_get_boolean(kf, "StatusIcon", "use_horizontal_slider", NULL);
+	m_show_sound_level = g_key_file_get_boolean(kf, "StatusIcon", "show_sound_level", NULL);
 	m_hotkey_up = g_key_file_get_value(kf, "Hotkeys", "up", NULL);
 	m_hotkey_down = g_key_file_get_value(kf, "Hotkeys", "down", NULL);
 	m_hotkey_mute = g_key_file_get_value(kf, "Hotkeys", "mute", NULL);
@@ -144,6 +148,16 @@ void config_set_left_mouse_slider(gboolean active)
 void config_set_middle_mouse_mute(gboolean active)
 {
 	m_mmb_mute = active;
+}
+
+void config_set_use_horizontal_slider(gboolean active)
+{
+	m_use_horizontal_slider = active;
+}
+
+void config_set_show_sound_level(gboolean active)
+{
+	m_show_sound_level = active;
 }
 
 void config_set_hotkey_up(const gchar * up)
@@ -219,6 +233,16 @@ gboolean config_get_middle_mouse_mute()
 	return m_mmb_mute;
 }
 
+gboolean config_get_use_horizontal_slider()
+{
+	return m_use_horizontal_slider;
+}
+
+gboolean config_get_show_sound_level()
+{
+	return m_show_sound_level;
+}
+
 const gchar * config_get_hotkey_up()
 {
 	return m_hotkey_up;
@@ -257,6 +281,8 @@ void config_write()
 	g_key_file_set_integer(kf, "StatusIcon", "stepsize", m_stepsize);
 	g_key_file_set_boolean(kf, "StatusIcon", "lmb_slider", m_lmb_slider);
 	g_key_file_set_boolean(kf, "StatusIcon", "mmb_mute", m_mmb_mute);
+	g_key_file_set_boolean(kf, "StatusIcon", "use_horizontal_slider", m_use_horizontal_slider);
+	g_key_file_set_boolean(kf, "StatusIcon", "show_sound_level", m_show_sound_level);
 	g_key_file_set_boolean(kf, "Hotkeys", "up_enabled", m_hotkey_up_enabled);
 	g_key_file_set_boolean(kf, "Hotkeys", "down_enabled", m_hotkey_down_enabled);
 	g_key_file_set_boolean(kf, "Hotkeys", "mute_enabled", m_hotkey_mute_enabled);

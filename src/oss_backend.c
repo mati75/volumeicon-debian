@@ -21,7 +21,7 @@
 // with this program.  If not, see <http://www.gnu.org/licenses/>.
 //##############################################################################
 
-#include "/usr/lib/oss/include/sys/soundcard.h"
+#include OSS_HEADER
 #include <stropts.h>
 #include <fcntl.h>
 #include <assert.h>
@@ -58,16 +58,29 @@ static int get_raw_value()
 	if(result == -1)
 		return 0;
 
-	struct { int16_t upper; int16_t lower; } * value;
-	value = (void*)&vr.value;
-
+	/*
+	If the control's type is MIXT_STEREOSLIDER16 or MIXT_MONOSLIDER16, we
+	map the value read from the ioctl to a 32-bit field comprised of two
+	16-bit values, with the left channel of a stereo control using the lower
+	16 bits.
+	Likewise, if the control's type has 8-bit precision, we map the values
+	to a 16-bit field.
+	*/
+	struct { int16_t upper; int16_t lower; } * long_value;
+	struct { int8_t upper; int8_t lower; } * short_value;
 	switch(m_ext.type)
 	{
 		case(MIXT_STEREOSLIDER16):
-			return value->lower;
 		case(MIXT_MONOSLIDER16):
-			return value->lower;
+			long_value = (void*)&vr.value;
+			return long_value->lower;
+
+		case(MIXT_STEREOSLIDER):
+		case(MIXT_MONOSLIDER):
+			short_value = (void*)&vr.value;
+			return short_value->lower;
 	}
+
 	return 0;
 }
 
@@ -157,7 +170,8 @@ void oss_setup(const gchar * card, const gchar * channel,
 	m_ext.ctrl = 0;
 	while(ioctl(m_mixer_fd, SNDCTL_MIX_EXTINFO, &m_ext) >= 0)
 	{
-		if(m_ext.type == MIXT_STEREOSLIDER16 || m_ext.type == MIXT_MONOSLIDER16)
+		if(m_ext.type == MIXT_STEREOSLIDER16 || m_ext.type == MIXT_MONOSLIDER16 
+		    || m_ext.type == MIXT_STEREOSLIDER || m_ext.type == MIXT_MONOSLIDER)
 		{
 			m_channel_names = g_list_append(m_channel_names,
 				(gpointer)g_strdup(m_ext.extname));
@@ -245,16 +259,31 @@ void oss_set_volume(int volume)
 	vr.ctrl = m_ext.ctrl;
 	vr.timestamp = m_ext.timestamp;
 
-	struct { int16_t upper; int16_t lower; } * value;
-	value = (void*)&vr.value;
+	struct { int16_t upper; int16_t lower; } * long_value;
+	struct { int8_t upper; int8_t lower; } * short_value;
+	switch(m_ext.type) {
+		case(MIXT_STEREOSLIDER16):
+		case(MIXT_MONOSLIDER16):
+			long_value = (void*)&vr.value;;
+		case(MIXT_STEREOSLIDER):
+		case(MIXT_MONOSLIDER):
+			short_value = (void*)&vr.value;;
+	}
 
 	switch(m_ext.type)
 	{
 		case(MIXT_STEREOSLIDER16):
-			value->upper = m_actual_maxvalue * volume / 100;
-			value->lower = m_actual_maxvalue * volume / 100;
+			long_value->upper = m_actual_maxvalue * volume / 100;
+			long_value->lower = m_actual_maxvalue * volume / 100;
 			break;
 		case(MIXT_MONOSLIDER16):
+			vr.value = m_actual_maxvalue * volume / 100;
+			break;
+		case(MIXT_STEREOSLIDER):
+			short_value->upper = m_actual_maxvalue * volume / 100;
+			short_value->lower = m_actual_maxvalue * volume / 100;
+			break;
+		case(MIXT_MONOSLIDER):
 			vr.value = m_actual_maxvalue * volume / 100;
 			break;
 		default:

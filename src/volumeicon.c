@@ -56,9 +56,9 @@ enum HOTKEY
 #ifndef DATADIR
 #define DATADIR "../data"
 #endif
-#define PREFERENCES_UI_FILE   DATADIR"/gui/preferences.ui"
-#define ICONS_DIR             DATADIR"/icons"
-#define APP_ICON              DATADIR"/gui/appicon.svg"
+#define PREFERENCES_UI_FILE   DATADIR "/gui/preferences.ui"
+#define ICONS_DIR             DATADIR "/icons"
+#define APP_ICON              DATADIR "/gui/appicon.svg"
 
 // About
 #define APPNAME "Volume Icon"
@@ -128,6 +128,8 @@ typedef struct
 	GtkRadioButton * slider_radiobutton;
 	GtkRadioButton * mmb_mute_radiobutton;
 	GtkRadioButton * mmb_mixer_radiobutton;
+	GtkCheckButton * use_horizontal_slider_checkbutton;
+	GtkCheckButton * show_sound_level_checkbutton;
 	GtkCellRenderer * cra_hotkey;
 	GtkCellRendererToggle * crt_hotkey;
 } PreferencesGui;
@@ -170,6 +172,26 @@ static void preferences_mmb_radiobutton_toggled(GtkToggleButton * togglebutton,
 {
 	gboolean active = gtk_toggle_button_get_active(togglebutton);
 	config_set_middle_mouse_mute(!active);
+}
+
+static void scale_setup();
+
+static void preferences_use_horizontal_slider_checkbutton_toggled(GtkCheckButton * widget,
+	gpointer user_data)
+{
+	gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+	config_set_use_horizontal_slider(active);
+	gtk_widget_destroy(m_scale);
+	gtk_widget_destroy(m_scale_window);
+	scale_setup();
+}
+
+static void preferences_show_sound_level_checkbutton_toggled(GtkCheckButton * widget,
+	gpointer user_data)
+{
+	gboolean active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+	config_set_show_sound_level(active);
+	gtk_scale_set_draw_value(GTK_SCALE(m_scale), active);
 }
 
 static void preferences_theme_combobox_changed(GtkComboBox * widget,
@@ -322,6 +344,8 @@ static void menu_preferences_on_activate(GtkMenuItem * menuitem,
 	gui->slider_radiobutton = GTK_RADIO_BUTTON(getobj("slider_radiobutton"));
 	gui->mmb_mute_radiobutton = GTK_RADIO_BUTTON(getobj("mmb_mute_radiobutton"));
 	gui->mmb_mixer_radiobutton = GTK_RADIO_BUTTON(getobj("mmb_mixer_radiobutton"));
+	gui->use_horizontal_slider_checkbutton = GTK_CHECK_BUTTON(getobj("use_horizontal_slider"));
+	gui->show_sound_level_checkbutton = GTK_CHECK_BUTTON(getobj("show_sound_level"));
 	gui->cra_hotkey = GTK_CELL_RENDERER(getobj("cra_hotkey"));
 	gui->crt_hotkey = GTK_CELL_RENDERER_TOGGLE(getobj("crt_hotkey"));
 	#undef getobj
@@ -351,6 +375,12 @@ static void menu_preferences_on_activate(GtkMenuItem * menuitem,
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gui->mmb_mixer_radiobutton),
 			TRUE);
 	}
+
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gui->use_horizontal_slider_checkbutton),
+		config_get_use_horizontal_slider());
+
+	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gui->show_sound_level_checkbutton),
+		config_get_show_sound_level());
 
 	// Fill the channel model and combobox
 	GtkTreeIter tree_iter;
@@ -414,6 +444,10 @@ static void menu_preferences_on_activate(GtkMenuItem * menuitem,
 		preferences_mute_radiobutton_toggled), (gpointer)gui);
 	g_signal_connect(G_OBJECT(gui->mmb_mixer_radiobutton), "toggled", G_CALLBACK(
 		preferences_mmb_radiobutton_toggled), (gpointer)gui);
+	g_signal_connect(G_OBJECT(gui->use_horizontal_slider_checkbutton), "toggled", G_CALLBACK(
+		preferences_use_horizontal_slider_checkbutton_toggled), (gpointer)gui);
+	g_signal_connect(G_OBJECT(gui->show_sound_level_checkbutton), "toggled", G_CALLBACK(
+		preferences_show_sound_level_checkbutton_toggled), (gpointer)gui);
 	g_signal_connect(G_OBJECT(gui->cra_hotkey), "accel-edited", G_CALLBACK(
 		preferences_cra_accel_edited), (gpointer)gui);
 	g_signal_connect(G_OBJECT(gui->crt_hotkey), "toggled", G_CALLBACK(
@@ -517,11 +551,19 @@ static void status_icon_on_button_release(GtkStatusIcon * status_icon,
 		{
 			GdkRectangle area;
 			gtk_status_icon_get_geometry(m_status_icon, NULL, &area, NULL);
-			x = area.x + area.width / 2 - sizex / 2;
-			if(area.y > sizey) // popup up
-				y = area.y - sizey;
-			else // popup down
-				y = area.y + area.height;
+			if(config_get_use_horizontal_slider()) {
+				y = area.y + area.height / 2 - sizey / 2;
+				if(area.x > sizex) // popup left
+					x = area.x - sizex;
+				else // popup right
+					x = area.x + area.width;
+			} else {
+				x = area.x + area.width / 2 - sizex / 2;
+				if(area.y > sizey) // popup up
+					y = area.y - sizey;
+				else // popup down
+					y = area.y + area.height;
+			}
 		}
 
 		gtk_window_move(GTK_WINDOW(m_scale_window), x, y);
@@ -766,9 +808,12 @@ static void notification_show()
 
 static void scale_setup()
 {
-	m_scale = gtk_vscale_new_with_range(0.0, 100.0, 1.0);
+	if(config_get_use_horizontal_slider())
+		m_scale = gtk_hscale_new_with_range(0.0, 100.0, 1.0);
+	else
+		m_scale =  gtk_vscale_new_with_range(0.0, 100.0, 1.0);
 	gtk_range_set_inverted(GTK_RANGE(m_scale), TRUE);
-	gtk_scale_set_draw_value(GTK_SCALE(m_scale), FALSE);
+	gtk_scale_set_draw_value(GTK_SCALE(m_scale), config_get_show_sound_level());
 
 	m_scale_window = gtk_window_new(GTK_WINDOW_POPUP);
 	gtk_window_set_decorated(GTK_WINDOW(m_scale_window), FALSE);
@@ -776,10 +821,16 @@ static void scale_setup()
 	gtk_window_set_skip_taskbar_hint(GTK_WINDOW(m_scale_window), TRUE);
 	gtk_window_set_keep_above(GTK_WINDOW(m_scale_window), TRUE);
 	gtk_container_add(GTK_CONTAINER(m_scale_window), m_scale);
+
+	if(config_get_use_horizontal_slider()) {
+		gtk_window_set_default_size(GTK_WINDOW(m_scale_window), 120, 0);
+		gtk_scale_set_value_pos(GTK_SCALE(m_scale), GTK_POS_RIGHT);
+	} else {
+		gtk_window_set_default_size(GTK_WINDOW(m_scale_window), 0, 120);
+		gtk_scale_set_value_pos(GTK_SCALE(m_scale), GTK_POS_TOP);
+	}
+
 	gtk_widget_show(m_scale);
-
-	gtk_window_set_default_size(GTK_WINDOW(m_scale_window), 0, 100);
-
 	scale_update();
 
 	g_signal_connect(G_OBJECT(m_scale), "value-changed",

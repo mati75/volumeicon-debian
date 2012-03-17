@@ -5,7 +5,7 @@ Maintainer: Andrew Gainer <gainer.andrew@gmail.com>
 Uploaders: Julien Valroff <julien@debian.org>
 Build-Depends: debhelper (>= 8.0.0~), autotools-dev,
  libgtk2.0-dev, libasound2-dev, libnotify-dev
-Standards-Version: 3.9.2
+Standards-Version: 3.9.3
 Homepage: http://softwarebakery.com/maato/volumeicon.html
 Vcs-Git: git://git.debian.org/collab-maint/volumeicon.git
 Vcs-Browser: http://git.debian.org/?p=collab-maint/volumeicon.git;a=summary

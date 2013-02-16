@@ -1,3 +1,10 @@
+volumeicon (0.4.6-2) unstable; urgency=low
+
+  * Add patch to remove inidividual glib headers - thanks to Michael Biebl
+    <biebl@debian.org> for the patch (Closes: #665623) 
+
+ -- Julien Valroff <julien@debian.org>  Sat, 16 Feb 2013 09:18:15 +0100
+
 volumeicon (0.4.6-1) unstable; urgency=low
 
   * New upstream release

@@ -1,5 +1,8 @@
+Description: Including individual glib headers no longer supported
+Author: Michael Biebl <biebl@debian.org>
+
 Index: volumeicon-0.4.6/src/alsa_backend.c
-===================================================================
+==================================================================
 --- volumeicon-0.4.6.orig/src/alsa_backend.c	2011-10-25 15:35:10.000000000 +0200
 +++ volumeicon-0.4.6/src/alsa_backend.c	2012-12-16 07:23:51.568024692 +0100
 @@ -22,10 +22,8 @@

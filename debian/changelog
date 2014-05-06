@@ -1,3 +1,10 @@
+volumeicon (0.4.6-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Remove alsa-base from depends. (Closes: #747172)
+
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Tue, 06 May 2014 20:41:23 +0200
+
 volumeicon (0.4.6-2) unstable; urgency=low
 
   * Add patch to remove inidividual glib headers - thanks to Michael Biebl

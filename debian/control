@@ -12,7 +12,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/volumeicon.git;a=summary
 
 Package: volumeicon-alsa
 Architecture: linux-any
-Depends: ${misc:Depends}, ${shlibs:Depends}, alsa-base
+Depends: ${misc:Depends}, ${shlibs:Depends}
 Suggests: alsamixergui | aumix-gtk | kmix | gnome-alsamixer,
   notify-osd | xfce4-nofityd | notification-daemon
 Description: systray volume icon for alsa

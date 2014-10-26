@@ -1,3 +1,16 @@
+volumeicon (0.4.6-2.2) unstable; urgency=high
+
+  * Non-maintainer upload.
+  * Add patch to replace x-terminal-emulator instead xterm - thanks to
+    Luca Capello <luca@pca.it> for the patch. (Closes: #754231)
+  * Typo in Depends: xfce4-nofityd => xfce4-notifyd. (Closes: #758494)
+  * Add .desktop file. (Closes: #749324)
+  * Bump Debian standards to 3.9.6. (no changes needed)
+  * Use canoninal Vcs fields.
+  * Bump debhelper version to 9.
+
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Sun, 26 Oct 2014 13:32:59 +0100
+
 volumeicon (0.4.6-2.1) unstable; urgency=medium
 
   * Non-maintainer upload.

@@ -1,0 +1,16 @@
+Description: Replace hardcoded xterm with x-terminal-emulator
+Bug-Debian: https://bugs.debian.org/754231
+Author: Luca Capello <luca@pca.it>
+Last-Update: 2014-07-08
+
+--- a/src/config.c
++++ b/src/config.c
+@@ -59,7 +59,7 @@
+ static void config_load_default()
+ {
+ 	if(!m_helper_program)
+-		config_set_helper("xterm -e 'alsamixer'");
++		config_set_helper("x-terminal-emulator -e 'alsamixer'");
+ 	if(!m_channel)
+ 		config_set_channel(NULL);
+ 	if(!m_card)

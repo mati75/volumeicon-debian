@@ -3,18 +3,18 @@ Section: sound
 Priority: optional
 Maintainer: Andrew Gainer <gainer.andrew@gmail.com>
 Uploaders: Julien Valroff <julien@debian.org>
-Build-Depends: debhelper (>= 8.0.0~), autotools-dev,
+Build-Depends: debhelper (>= 9), autotools-dev,
  libgtk2.0-dev, libasound2-dev, libnotify-dev
-Standards-Version: 3.9.3
+Standards-Version: 3.9.6
 Homepage: http://softwarebakery.com/maato/volumeicon.html
-Vcs-Git: git://git.debian.org/collab-maint/volumeicon.git
-Vcs-Browser: http://git.debian.org/?p=collab-maint/volumeicon.git;a=summary
+Vcs-Git: git://anonscm.debian.org/collab-maint/volumeicon.git
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/volumeicon.git;a=summary
 
 Package: volumeicon-alsa
 Architecture: linux-any
 Depends: ${misc:Depends}, ${shlibs:Depends}
 Suggests: alsamixergui | aumix-gtk | kmix | gnome-alsamixer,
-  notify-osd | xfce4-nofityd | notification-daemon
+  notify-osd | xfce4-notifyd | notification-daemon
 Description: systray volume icon for alsa
  This is a lightweight volume control that sits in your systray. This
  version is compatible with ALSA.

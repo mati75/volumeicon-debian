@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Volume Icon
+Name[fr]=Icône pour le contrôle du volume
+Comment=Lightweight volume control for the systray
+Comment[fr]=Simple contrôle du volume pour la barre d'état
+Icon=volume
+Exec=volumeicon
+Terminal=false
+Type=Application
+StartupNotify=false
+Categories=AudioVideo;
+Keywords=audio;sound;mixer;music;

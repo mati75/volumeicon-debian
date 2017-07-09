@@ -5,6 +5,8 @@ volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
   * debian/control:
     - Update Build-Depends for GTK+3.
     - Add dh-autoreconf and intltool to Build-Depends.
+    - Bump dh version to 10.
+    - Bump Standards-Version to 4.0.0.
   * Drop 001_remove-individual-glib-headers.diff -- included upstream.
   * Drop 002_replace-hardcoded-xterm.diff -- no longer needed. 
   * debian/rules: use autoreconf.

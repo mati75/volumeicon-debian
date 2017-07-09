@@ -1,3 +1,17 @@
+volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
+
+  * New upstream release. (Closes: #682098, #738714)
+  * debian/control:
+    - Add myself to uploaders.
+    - Update Build-Depends for GTK+3.
+    - Add dh-autoreconf and intltool to Build-Depends.
+  * Drop 001_remove-individual-glib-headers.diff -- included upstream.
+  * Drop 002_replace-hardcoded-xterm.diff -- no longer needed. 
+  * debian/rules: use autoreconf.
+  * debian/copyright: Add myself to debian copyright.
+
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Sat, 18 Apr 2015 11:48:42 +0200
+
 volumeicon (0.4.6-2.2) unstable; urgency=high
 
   * Non-maintainer upload.

@@ -1,0 +1,15 @@
+Description: Fix some spelling errors in manpage
+Author: Mateusz Łukasik <mati75@linuxmint.pl>
+Last-Update: 2017-07-09
+
+--- a/doc/volumeicon.5.pod
++++ b/doc/volumeicon.5.pod
+@@ -12,7 +12,7 @@ B<~/.config/volumeicon/volumeicon>
+ 
+ =head1 DESCRIPTION
+ 
+-L<volumeicon(1)> obtains configuration information from B<~/.config/volumeicon/volumeicon>. This configuration file can be overriden on runtime via B<--config> switch.
++L<volumeicon(1)> obtains configuration information from B<~/.config/volumeicon/volumeicon>. This configuration file can be overridden on runtime via B<--config> switch.
+ 
+ The configuration syntax is similar of those .ini files.
+ 

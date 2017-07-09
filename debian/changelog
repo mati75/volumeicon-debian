@@ -1,8 +1,8 @@
 volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
 
-  * New upstream release. (Closes: #682098, #738714)
+  * New upstream release. (Closes: #682098 #738714 #862107)
+  * Adopt package. (Closes: #826634)
   * debian/control:
-    - Add myself to uploaders.
     - Update Build-Depends for GTK+3.
     - Add dh-autoreconf and intltool to Build-Depends.
   * Drop 001_remove-individual-glib-headers.diff -- included upstream.

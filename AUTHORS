@@ -2,6 +2,9 @@ Volume Icon authors/contributors:
 
 Maato <maato@softwarebakery.com>
  - Developer
+
+Niklas Koep <niklas.koep@gmail.com>
+ - Lots of fixes, and help on github.
  
 David Gidwani <david.gidwani@gmail.com>
  - Hotkey support
@@ -20,3 +23,22 @@ Jean-Pierre Demailly <demailly@fourier.ujf-grenoble.fr>
 Matt Boyer
  - Added support for 8-bit OSS sliders and improved configure.ac for OSS
 
+Gauvain Pocentek
+ - Port to GTK 3
+ - Added french translation.
+
+Revellian
+ - Changed volume mapping to match that of alsamixer (code from alsamixer).
+
+Dan Church
+ - Added `--with-default-mixerapp' configur option.
+
+Valère Monseur
+ - Added option for transparent slider background.
+ - Various small fixes.
+
+Steven Honeyman
+ - Only use gtk -panel icons if they exist.
+
+Mateusz Łukasik <mati75@linuxmint.pl>
+ - Polish translation

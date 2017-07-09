@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script
-AC_INIT([volumeicon], [0.4.6], [http://www.softwarebakery.com/maato/volumeicon.html])
+AC_INIT([volumeicon], [0.5.1], [http://www.softwarebakery.com/maato/volumeicon.html])
 
 AM_INIT_AUTOMAKE
 
@@ -15,6 +15,15 @@ AC_TYPE_PID_T
 AC_TYPE_SIGNAL
 AC_FUNC_FORK
 
+AC_PROG_INTLTOOL([0.23])
+
+GETTEXT_PACKAGE=volumeicon
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE")
+ALL_LINGUAS=""
+AM_GLIB_GNU_GETTEXT
+AM_GLIB_DEFINE_LOCALEDIR(LOCALEDIR)
+
 # Checks for command line options
 AC_ARG_ENABLE([oss],
   [  --disable-oss    disable oss],
@@ -26,7 +35,7 @@ AC_ARG_ENABLE([notify],
   [notify=no])
 
 # Check for gtk
-PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.16])
+PKG_CHECK_MODULES([GTK], [gtk+-3.0 >= 3.0])
 AC_SUBST(GTK_CFLAGS)
 AC_SUBST(GTK_LIBS)
 
@@ -77,7 +86,7 @@ fi
 if test "x${notify}" = xyes; then
 # Check for libnotify
 PKG_CHECK_MODULES([NOTIFY], [libnotify >= 0.5.0])
-NOTIFY_CFLAGS+="-DCOMPILEWITH_NOTIFY"
+NOTIFY_CFLAGS+=" -DCOMPILEWITH_NOTIFY"
 AC_SUBST(NOTIFY_CFLAGS)
 AC_SUBST(NOTIFY_LIBS)
 fi
@@ -86,9 +95,18 @@ AC_SUBST(OSS_CFLAGS)
 
 AM_CONDITIONAL(ENABLE_OSS, test "$oss" = "yes")
 
+DEFAULT_MIXERAPP="xterm -e 'alsamixer'"
+AC_ARG_WITH(default-mixerapp,
+[  --with-default-mixerapp=appname
+                           Default command for "Open Mixer" menu item
+                           (default: "xterm -e 'alsamixer'")],
+DEFAULT_MIXERAPP=$withval)
+AC_DEFINE_UNQUOTED(DEFAULT_MIXERAPP,"${DEFAULT_MIXERAPP}",[Default mixer application])
 
 AC_CONFIG_FILES(Makefile \
 		src/Makefile \
-		data/Makefile)
+		data/Makefile \
+		doc/Makefile \
+		po/Makefile.in)
 
 AC_OUTPUT

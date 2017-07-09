@@ -2,7 +2,7 @@
 // volumeicon
 //
 // config.c - a singleton providing configuration values/functions
-// 
+//
 // Copyright 2011 Maato
 //
 // Authors:
@@ -21,9 +21,8 @@
 // with this program.  If not, see <http://www.gnu.org/licenses/>.
 //##############################################################################
 
-#include <gtk/gtk.h>
-#include <glib/gstdio.h>
 #include <assert.h>
+#include <glib/gstdio.h>
 
 #include "config.h"
 
@@ -36,284 +35,458 @@
 //##############################################################################
 // Static variables
 //##############################################################################
-static char * m_config_file = NULL;
-static char * m_helper_program = NULL;
-static gchar * m_theme = NULL;
-static gchar * m_card = NULL;
-static gchar * m_channel = NULL;
-static gchar * m_hotkey_up = NULL;
-static gchar * m_hotkey_down = NULL;
-static gchar * m_hotkey_mute = NULL;
-static int m_stepsize = 0;
-static gboolean m_lmb_slider = FALSE;
-static gboolean m_mmb_mute = FALSE;
-static gboolean m_use_horizontal_slider = FALSE;
-static gboolean m_show_sound_level = FALSE;
-static gboolean m_hotkey_up_enabled = FALSE;
-static gboolean m_hotkey_down_enabled = FALSE;
-static gboolean m_hotkey_mute_enabled = FALSE;
+static struct config {
+	gchar *path;
+
+	// Alsa
+	gchar *card; // TODO: Rename this to device.
+	gchar *channel;
+	gboolean logarithmic_scale;
+
+	// Notifications
+	gboolean show_notification;
+	gint notification_type;
+
+	// Status icon
+	int stepsize; // TODO: Rename this to volume_stepsize.
+	gchar *helper_program;
+	gchar *theme;
+	gboolean use_panel_specific_icons;
+	gboolean reverse_scroll_direction;
+
+	// Left mouse button action
+	gboolean lmb_slider;
+
+	// Middle mouse button action
+	gboolean mmb_mute;
+
+	// Layout
+	gboolean use_horizontal_slider;
+	gboolean show_sound_level;
+	gboolean use_transparent_background;
+
+	// Hotkeys
+	gboolean hotkey_up_enabled;
+	gboolean hotkey_down_enabled;
+	gboolean hotkey_mute_enabled;
+	gchar *hotkey_up;
+	gchar *hotkey_down;
+	gchar *hotkey_mute;
+} m_config = {.path = NULL,
+
+              // Alsa
+              .card = NULL,
+              .channel = NULL,
+              .logarithmic_scale = FALSE,
+
+              // Notifications
+              .show_notification = TRUE,
+              .notification_type = 0,
+
+              // Status icon
+              .stepsize = 0,
+              .helper_program = NULL,
+              .theme = NULL,
+              .use_panel_specific_icons = FALSE,
+              .reverse_scroll_direction = FALSE,
+
+              // Left mouse button action
+              .lmb_slider = FALSE,
+
+              // Middle mouse button action
+              .mmb_mute = FALSE,
+
+              // Layout
+              .use_horizontal_slider = FALSE,
+              .show_sound_level = FALSE,
+              .use_transparent_background = FALSE,
+
+              // Hotkeys
+              .hotkey_up_enabled = FALSE,
+              .hotkey_down_enabled = FALSE,
+              .hotkey_mute_enabled = FALSE,
+              .hotkey_up = NULL,
+              .hotkey_down = NULL,
+              .hotkey_mute = NULL};
 
 //##############################################################################
 // Static functions
 //##############################################################################
-static void config_load_default()
+static void config_load_default(void)
 {
-	if(!m_helper_program)
-		config_set_helper("xterm -e 'alsamixer'");
-	if(!m_channel)
+	if(!m_config.helper_program)
+		config_set_helper(DEFAULT_MIXERAPP);
+	if(!m_config.channel)
 		config_set_channel(NULL);
-	if(!m_card)
+	if(!m_config.card)
 		config_set_card("default");
-	if(!m_stepsize)
+	if(!m_config.stepsize)
 		config_set_stepsize(5);
-	if(!m_theme)
+	if(!m_config.theme)
 		config_set_theme("Default");
-	if(!m_hotkey_up)
+	if(!m_config.hotkey_up)
 		config_set_hotkey_up("XF86AudioRaiseVolume");
-	if(!m_hotkey_down)
+	if(!m_config.hotkey_down)
 		config_set_hotkey_down("XF86AudioLowerVolume");
-	if(!m_hotkey_mute)
+	if(!m_config.hotkey_mute)
 		config_set_hotkey_mute("XF86AudioMute");
 }
 
-static void config_read()
+static void config_read(void)
 {
 	// Clean up previously loaded configuration values
-	m_stepsize = 0;
-	g_free(m_helper_program);
-	g_free(m_channel);
-	g_free(m_theme);
+	m_config.stepsize = 0;
+	g_free(m_config.helper_program);
+	g_free(m_config.channel);
+	g_free(m_config.theme);
 
 	// Load keys from keyfile
-	GKeyFile * kf = g_key_file_new();
-	g_key_file_load_from_file(kf, m_config_file, G_KEY_FILE_NONE, NULL);
-	m_helper_program = g_key_file_get_value(kf, "StatusIcon", "onclick", NULL);
-	m_card = g_key_file_get_value(kf, "Alsa", "card", NULL);
-	m_channel = g_key_file_get_value(kf, "Alsa", "channel", NULL);
-	m_stepsize = g_key_file_get_integer(kf, "StatusIcon", "stepsize", NULL);
-	m_theme = g_key_file_get_value(kf, "StatusIcon", "theme", NULL);
-	m_lmb_slider = g_key_file_get_boolean(kf, "StatusIcon", "lmb_slider", NULL);
-	m_mmb_mute = g_key_file_get_boolean(kf, "StatusIcon", "mmb_mute", NULL);
-	m_use_horizontal_slider = g_key_file_get_boolean(kf, "StatusIcon", "use_horizontal_slider", NULL);
-	m_show_sound_level = g_key_file_get_boolean(kf, "StatusIcon", "show_sound_level", NULL);
-	m_hotkey_up = g_key_file_get_value(kf, "Hotkeys", "up", NULL);
-	m_hotkey_down = g_key_file_get_value(kf, "Hotkeys", "down", NULL);
-	m_hotkey_mute = g_key_file_get_value(kf, "Hotkeys", "mute", NULL);
-	m_hotkey_up_enabled = g_key_file_get_boolean(kf, "Hotkeys", "up_enabled", NULL);
-	m_hotkey_down_enabled = g_key_file_get_boolean(kf, "Hotkeys", "down_enabled", NULL);
-	m_hotkey_mute_enabled = g_key_file_get_boolean(kf, "Hotkeys", "mute_enabled", NULL);
+	GKeyFile *kf = g_key_file_new();
+	g_key_file_load_from_file(kf, m_config.path, G_KEY_FILE_NONE, NULL);
+
+#define GET_VALUE(type, section, key)                                         \
+	g_key_file_get_##type(kf, section, key, NULL)
+#define GET_STRING(s, k) GET_VALUE(value, s, k)
+#define GET_BOOL(s, k) GET_VALUE(boolean, s, k)
+#define GET_INT(s, k) GET_VALUE(integer, s, k)
+
+	// Alsa
+	m_config.card = GET_STRING("Alsa", "card");
+	m_config.channel = GET_STRING("Alsa", "channel");
+	m_config.logarithmic_scale = GET_BOOL("Alsa", "logarithmic_scale");
+
+	// Notifications
+	m_config.show_notification = GET_BOOL("Notification", "show_notification");
+	m_config.notification_type = GET_INT("Notification", "notification_type");
+
+	// Status icon
+	m_config.stepsize = GET_INT("StatusIcon", "stepsize");
+	m_config.helper_program = GET_STRING("StatusIcon", "onclick");
+	m_config.theme = GET_STRING("StatusIcon", "theme");
+	m_config.use_panel_specific_icons =
+	    GET_BOOL("StatusIcon", "use_panel_specific_icons");
+	m_config.reverse_scroll_direction =
+	    GET_BOOL("StatusIcon", "reverse_scroll_direction");
+
+	// Left mouse button action
+	m_config.lmb_slider = GET_BOOL("StatusIcon", "lmb_slider");
+
+	// Middle mouse button action
+	m_config.mmb_mute = GET_BOOL("StatusIcon", "mmb_mute");
+
+	// Layout
+	m_config.use_horizontal_slider =
+	    GET_BOOL("StatusIcon", "use_horizontal_slider");
+	m_config.show_sound_level = GET_BOOL("StatusIcon", "show_sound_level");
+	m_config.use_transparent_background =
+	    GET_BOOL("StatusIcon", "use_transparent_background");
+
+	// Hotkeys
+	m_config.hotkey_up_enabled = GET_BOOL("Hotkeys", "up_enabled");
+	m_config.hotkey_down_enabled = GET_BOOL("Hotkeys", "down_enabled");
+	m_config.hotkey_mute_enabled = GET_BOOL("Hotkeys", "mute_enabled");
+	m_config.hotkey_up = GET_STRING("Hotkeys", "up");
+	m_config.hotkey_down = GET_STRING("Hotkeys", "down");
+	m_config.hotkey_mute = GET_STRING("Hotkeys", "mute");
+
 	g_key_file_free(kf);
+
+#undef GET_VALUE
+#undef GET_STRING
+#undef GET_BOOL
+#undef GET_INT
 
 	// Load default values for unset keys
 	config_load_default();
 }
 
 //##############################################################################
-// Exported functions
+// Exported setter functions
 //##############################################################################
-void config_set_helper(const gchar * helper)
+
+// Alsa
+void config_set_card(const gchar *card)
 {
-	g_free(m_helper_program);
-	m_helper_program = g_strdup(helper);
+	g_free(m_config.card);
+	m_config.card = g_strdup(card);
 }
 
-void config_set_theme(const gchar * theme)
+void config_set_channel(const gchar *channel)
 {
-	g_free(m_theme);
-	m_theme = g_strdup(theme);
+	g_free(m_config.channel);
+	m_config.channel = g_strdup(channel);
 }
 
-void config_set_card(const gchar * card)
+void config_set_use_logarithmic_scale(gboolean logarithmic_scale)
 {
-	g_free(m_card);
-	m_card = g_strdup(card);
+	m_config.logarithmic_scale = logarithmic_scale;
 }
 
-void config_set_channel(const gchar * channel)
+// Notifications
+void config_set_show_notification(gboolean active)
 {
-	g_free(m_channel);
-	m_channel = g_strdup(channel);
+	m_config.show_notification = active;
 }
 
-void config_set_stepsize(int stepsize)
+void config_set_notification_type(gint type)
 {
-	m_stepsize = stepsize;
+	m_config.notification_type = type;
 }
 
+// Status icon
+void config_set_stepsize(int stepsize) { m_config.stepsize = stepsize; }
+
+void config_set_helper(const gchar *helper)
+{
+	g_free(m_config.helper_program);
+	m_config.helper_program = g_strdup(helper);
+}
+
+void config_set_theme(const gchar *theme)
+{
+	g_free(m_config.theme);
+	m_config.theme = g_strdup(theme);
+}
+
+void config_set_use_panel_specific_icons(gboolean active)
+{
+	m_config.use_panel_specific_icons = active;
+}
+
+void config_set_reverse_scroll_direction(gboolean active)
+{
+	m_config.reverse_scroll_direction = active;
+}
+
+// Left mouse button action
 void config_set_left_mouse_slider(gboolean active)
 {
-	m_lmb_slider = active;
+	m_config.lmb_slider = active;
 }
 
+// Middle mouse button action
 void config_set_middle_mouse_mute(gboolean active)
 {
-	m_mmb_mute = active;
+	m_config.mmb_mute = active;
 }
 
+// Layout
 void config_set_use_horizontal_slider(gboolean active)
 {
-	m_use_horizontal_slider = active;
+	m_config.use_horizontal_slider = active;
 }
 
 void config_set_show_sound_level(gboolean active)
 {
-	m_show_sound_level = active;
+	m_config.show_sound_level = active;
 }
 
-void config_set_hotkey_up(const gchar * up)
+void config_set_use_transparent_background(gboolean active)
 {
-	g_free(m_hotkey_up);
-	m_hotkey_up = g_strdup(up);
+	m_config.use_transparent_background = active;
 }
 
-void config_set_hotkey_down(const gchar * down)
-{
-	g_free(m_hotkey_down);
-	m_hotkey_down = g_strdup(down);
-}
-
-void config_set_hotkey_mute(const gchar * mute)
-{
-	g_free(m_hotkey_mute);
-	m_hotkey_mute = g_strdup(mute);
-}
-
+// Hotkey
 void config_set_hotkey_up_enabled(gboolean enabled)
 {
-	m_hotkey_up_enabled = enabled;
+	m_config.hotkey_up_enabled = enabled;
 }
 
 void config_set_hotkey_down_enabled(gboolean enabled)
 {
-	m_hotkey_down_enabled = enabled;
+	m_config.hotkey_down_enabled = enabled;
 }
 
 void config_set_hotkey_mute_enabled(gboolean enabled)
 {
-	m_hotkey_mute_enabled = enabled;
+	m_config.hotkey_mute_enabled = enabled;
 }
 
-const gchar * config_get_helper()
+void config_set_hotkey_up(const gchar *up)
 {
-	return m_helper_program;
+	g_free(m_config.hotkey_up);
+	m_config.hotkey_up = g_strdup(up);
 }
 
-const gchar * config_get_theme()
+void config_set_hotkey_down(const gchar *down)
 {
-	return m_theme;
+	g_free(m_config.hotkey_down);
+	m_config.hotkey_down = g_strdup(down);
 }
 
-const gchar * config_get_card()
+void config_set_hotkey_mute(const gchar *mute)
 {
-	return m_card;
+	g_free(m_config.hotkey_mute);
+	m_config.hotkey_mute = g_strdup(mute);
 }
 
-const gchar * config_get_channel()
+//##############################################################################
+// Exported getter functions
+//##############################################################################
+
+// Alsa
+const gchar *config_get_card(void) { return m_config.card; }
+
+const gchar *config_get_channel(void) { return m_config.channel; }
+
+gboolean config_get_use_logarithmic_scale()
 {
-	return m_channel;
+	return m_config.logarithmic_scale;
 }
 
-int config_get_stepsize()
+// Notifications
+gboolean config_get_show_notification(void)
 {
-	return m_stepsize;
+	return m_config.show_notification;
 }
 
-gboolean config_get_use_gtk_theme()
+gint config_get_notification_type(void) { return m_config.notification_type; }
+
+// Status icon
+int config_get_stepsize(void) { return m_config.stepsize; }
+
+const gchar *config_get_helper(void) { return m_config.helper_program; }
+
+const gchar *config_get_theme(void) { return m_config.theme; }
+
+gboolean config_get_use_gtk_theme(void)
 {
-	return g_strcmp0(m_theme, "Default") == 0 ? TRUE : FALSE;
+	return g_strcmp0(m_config.theme, "Default") == 0 ? TRUE : FALSE;
 }
 
-gboolean config_get_left_mouse_slider()
+gboolean config_get_use_panel_specific_icons(void)
 {
-	return m_lmb_slider;
+	return m_config.use_panel_specific_icons;
 }
 
-gboolean config_get_middle_mouse_mute()
+gboolean config_get_reverse_scroll_direction(void)
 {
-	return m_mmb_mute;
+	return m_config.reverse_scroll_direction;
 }
 
-gboolean config_get_use_horizontal_slider()
+// Left mouse button action
+gboolean config_get_left_mouse_slider(void) { return m_config.lmb_slider; }
+
+// Middle mouse button action
+gboolean config_get_middle_mouse_mute(void) { return m_config.mmb_mute; }
+
+// Layout
+gboolean config_get_use_horizontal_slider(void)
 {
-	return m_use_horizontal_slider;
+	return m_config.use_horizontal_slider;
 }
 
-gboolean config_get_show_sound_level()
+gboolean config_get_show_sound_level(void)
 {
-	return m_show_sound_level;
+	return m_config.show_sound_level;
 }
 
-const gchar * config_get_hotkey_up()
+gboolean config_get_use_transparent_background(void)
 {
-	return m_hotkey_up;
+	return m_config.use_transparent_background;
 }
 
-const gchar * config_get_hotkey_down()
+// Hotkeys
+gboolean config_get_hotkey_up_enabled(void)
 {
-	return m_hotkey_down;
+	return m_config.hotkey_up_enabled;
 }
 
-const gchar * config_get_hotkey_mute()
+gboolean config_get_hotkey_down_enabled(void)
 {
-	return m_hotkey_mute;
+	return m_config.hotkey_down_enabled;
 }
 
-gboolean config_get_hotkey_up_enabled()
+gboolean config_get_hotkey_mute_enabled(void)
 {
-	return m_hotkey_up_enabled;
+	return m_config.hotkey_mute_enabled;
 }
 
-gboolean config_get_hotkey_down_enabled()
+const gchar *config_get_hotkey_up(void) { return m_config.hotkey_up; }
+
+const gchar *config_get_hotkey_down(void) { return m_config.hotkey_down; }
+
+const gchar *config_get_hotkey_mute(void) { return m_config.hotkey_mute; }
+
+//##############################################################################
+// Exported miscellaneous functions
+//##############################################################################
+void config_write(void)
 {
-	return m_hotkey_down_enabled;
-}
+	assert(m_config.path);
 
-gboolean config_get_hotkey_mute_enabled()
-{
-	return m_hotkey_mute_enabled;
-}
+	GKeyFile *kf = g_key_file_new();
 
-void config_write()
-{
-	assert(m_config_file != NULL);
+#define SET_VALUE(type, section, key, value)                                  \
+	g_key_file_set_##type(kf, section, key, value)
+#define SET_STRING(s, k, v) SET_VALUE(value, s, k, v)
+#define SET_BOOL(s, k, v) SET_VALUE(boolean, s, k, v)
+#define SET_INT(s, k, v) SET_VALUE(integer, s, k, v)
 
-	GKeyFile * kf = g_key_file_new();
-	g_key_file_set_integer(kf, "StatusIcon", "stepsize", m_stepsize);
-	g_key_file_set_boolean(kf, "StatusIcon", "lmb_slider", m_lmb_slider);
-	g_key_file_set_boolean(kf, "StatusIcon", "mmb_mute", m_mmb_mute);
-	g_key_file_set_boolean(kf, "StatusIcon", "use_horizontal_slider", m_use_horizontal_slider);
-	g_key_file_set_boolean(kf, "StatusIcon", "show_sound_level", m_show_sound_level);
-	g_key_file_set_boolean(kf, "Hotkeys", "up_enabled", m_hotkey_up_enabled);
-	g_key_file_set_boolean(kf, "Hotkeys", "down_enabled", m_hotkey_down_enabled);
-	g_key_file_set_boolean(kf, "Hotkeys", "mute_enabled", m_hotkey_mute_enabled);
-	if(m_helper_program)
-		g_key_file_set_value(kf, "StatusIcon", "onclick", m_helper_program);
-	if(m_theme)
-		g_key_file_set_value(kf, "StatusIcon", "theme", m_theme);
-	if(m_card)
-		g_key_file_set_value(kf, "Alsa", "card", m_card);
-	if(m_channel)
-		g_key_file_set_value(kf, "Alsa", "channel", m_channel);
-	if(m_hotkey_up)
-		g_key_file_set_value(kf, "Hotkeys", "up", m_hotkey_up);
-	if(m_hotkey_down)
-		g_key_file_set_value(kf, "Hotkeys", "down", m_hotkey_down);
-	if(m_hotkey_mute)
-		g_key_file_set_value(kf, "Hotkeys", "mute", m_hotkey_mute);
+	// Alsa
+	if(m_config.card)
+		SET_STRING("Alsa", "card", m_config.card);
+	if(m_config.channel)
+		SET_STRING("Alsa", "channel", m_config.channel);
+	SET_BOOL("Alsa", "logarithmic_scale", m_config.logarithmic_scale);
 
-	gsize length;
-	gchar * data = g_key_file_to_data(kf, &length, NULL);
-	g_file_set_contents(m_config_file, data, -1, NULL);
-	g_free(data);
+	// Notifications
+	SET_BOOL("Notification", "show_notification", m_config.show_notification);
+	SET_INT("Notification", "notification_type", m_config.notification_type);
+
+	// Status icon
+	SET_INT("StatusIcon", "stepsize", m_config.stepsize);
+	if(m_config.helper_program)
+		SET_STRING("StatusIcon", "onclick", m_config.helper_program);
+	if(m_config.theme)
+		SET_STRING("StatusIcon", "theme", m_config.theme);
+	SET_BOOL("StatusIcon", "use_panel_specific_icons",
+	         m_config.use_panel_specific_icons);
+	SET_BOOL("StatusIcon", "reverse_scroll_direction",
+	         m_config.reverse_scroll_direction);
+
+	// Left mouse button action
+	SET_BOOL("StatusIcon", "lmb_slider", m_config.lmb_slider);
+
+	// Middle mouse button action
+	SET_BOOL("StatusIcon", "mmb_mute", m_config.mmb_mute);
+
+	// Layout
+	SET_BOOL("StatusIcon", "use_horizontal_slider",
+	         m_config.use_horizontal_slider);
+	SET_BOOL("StatusIcon", "show_sound_level", m_config.show_sound_level);
+	SET_BOOL("StatusIcon", "use_transparent_background",
+	         m_config.use_transparent_background);
+
+	// Hotkeys
+	SET_BOOL("Hotkeys", "up_enabled", m_config.hotkey_up_enabled);
+	SET_BOOL("Hotkeys", "down_enabled", m_config.hotkey_down_enabled);
+	SET_BOOL("Hotkeys", "mute_enabled", m_config.hotkey_mute_enabled);
+	if(m_config.hotkey_up)
+		SET_STRING("Hotkeys", "up", m_config.hotkey_up);
+	if(m_config.hotkey_down)
+		SET_STRING("Hotkeys", "down", m_config.hotkey_down);
+	if(m_config.hotkey_mute)
+		SET_STRING("Hotkeys", "mute", m_config.hotkey_mute);
+
+	gchar *data = g_key_file_to_data(kf, NULL, NULL);
 	g_key_file_free(kf);
+	g_file_set_contents(m_config.path, data, -1, NULL);
+	g_free(data);
+
+#undef SET_VALUE
+#undef SET_STRING
+#undef SET_BOOL
+#undef SET_INT
 }
 
-void config_initialize()
+void config_initialize(gchar *config_name)
 {
 	// Build config directory name
-	gchar * config_dir = g_build_filename(g_get_user_config_dir(),
-		CONFIG_DIRNAME, NULL);
-	m_config_file = g_build_filename(config_dir, CONFIG_FILENAME, NULL);
+	gchar *config_dir =
+	    g_build_filename(g_get_user_config_dir(), CONFIG_DIRNAME, NULL);
+	m_config.path = g_build_filename(
+	    config_dir, config_name ? config_name : CONFIG_FILENAME, NULL);
 
 	// Make sure config directory exists
 	if(!g_file_test(config_dir, G_FILE_TEST_IS_DIR))
@@ -321,13 +494,11 @@ void config_initialize()
 
 	// If a config file doesn't exist, create one with defaults otherwise
 	// read the existing one.
-	if(!g_file_test(m_config_file, G_FILE_TEST_EXISTS))
-	{
+	if(!g_file_test(m_config.path, G_FILE_TEST_EXISTS)) {
 		config_load_default();
 		config_write();
 	}
-	else
-	{
+	else {
 		config_read();
 	}
 

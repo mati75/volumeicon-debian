@@ -14,6 +14,7 @@ volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
   * debian/copyright: Add myself to debian copyright.
   * Drop menu file.
   * Enable hardening.
+  * Drop debian/source/lintian-overrides.
 
  -- Mateusz Łukasik <mati75@linuxmint.pl>  Sat, 18 Apr 2015 11:48:42 +0200
 

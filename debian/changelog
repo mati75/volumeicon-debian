@@ -4,7 +4,7 @@ volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
   * Adopt package. (Closes: #826634)
   * debian/control:
     - Update Build-Depends for GTK+3.
-    - Add dh-autoreconf and intltool to Build-Depends.
+    - Add intltool to Build-Depends.
     - Bump dh version to 10.
     - Bump Standards-Version to 4.0.0.
     - Update VCS.
@@ -13,6 +13,7 @@ volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
   * debian/rules: use autoreconf.
   * debian/copyright: Add myself to debian copyright.
   * Drop menu file.
+  * Enable hardening.
 
  -- Mateusz Łukasik <mati75@linuxmint.pl>  Sat, 18 Apr 2015 11:48:42 +0200
 

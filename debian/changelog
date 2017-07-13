@@ -1,4 +1,4 @@
-volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
+volumeicon (0.5.1+git20170117-1) unstable; urgency=medium
 
   * New upstream release. (Closes: #682098 #738714 #862107)
   * Adopt package. (Closes: #826634)
@@ -18,7 +18,7 @@ volumeicon (0.5.1+git20170117-1) UNRELEASED; urgency=medium
   * Add debian/patches/fix_spelling_error.patch to Fix some spelling errors
     in manpage.
 
- -- Mateusz Łukasik <mati75@linuxmint.pl>  Sat, 18 Apr 2015 11:48:42 +0200
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Sun, 09 Jul 2017 18:25:34 +0200
 
 volumeicon (0.4.6-2.2) unstable; urgency=high
 

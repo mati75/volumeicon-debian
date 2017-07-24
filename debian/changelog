@@ -1,3 +1,9 @@
+volumeicon (0.5.1+git20170117-1~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports.
+
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Sat, 22 Jul 2017 16:57:24 +0200
+
 volumeicon (0.5.1+git20170117-1) unstable; urgency=medium
 
   * New upstream release. (Closes: #682098 #738714 #862107)

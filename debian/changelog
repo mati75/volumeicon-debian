@@ -1,3 +1,9 @@
+volumeicon (0.5.1+git20170117-2) UNRELEASED; urgency=medium
+
+  * Trim trailing whitespace.
+
+ -- Debian Janitor <janitor@jelmer.uk>  Wed, 06 May 2020 00:24:43 +0000
+
 volumeicon (0.5.1+git20170117-1) unstable; urgency=medium
 
   * New upstream release. (Closes: #682098 #738714 #862107)
@@ -9,7 +15,7 @@ volumeicon (0.5.1+git20170117-1) unstable; urgency=medium
     - Bump Standards-Version to 4.0.0.
     - Update VCS.
   * Drop 001_remove-individual-glib-headers.diff -- included upstream.
-  * Drop 002_replace-hardcoded-xterm.diff -- no longer needed. 
+  * Drop 002_replace-hardcoded-xterm.diff -- no longer needed.
   * debian/rules: use autoreconf.
   * debian/copyright: Add myself to debian copyright.
   * Drop menu file.
@@ -43,15 +49,15 @@ volumeicon (0.4.6-2.1) unstable; urgency=medium
 volumeicon (0.4.6-2) unstable; urgency=low
 
   * Add patch to remove inidividual glib headers - thanks to Michael Biebl
-    <biebl@debian.org> for the patch (Closes: #665623) 
+    <biebl@debian.org> for the patch (Closes: #665623)
 
  -- Julien Valroff <julien@debian.org>  Sat, 16 Feb 2013 09:18:15 +0100
 
 volumeicon (0.4.6-1) unstable; urgency=low
 
   * New upstream release
-  * Update copyright file as per DEP-5 1.0 standard 
-  * Bump Debian standards to 3.9.3 
+  * Update copyright file as per DEP-5 1.0 standard
+  * Bump Debian standards to 3.9.3
 
  -- Julien Valroff <julien@debian.org>  Sat, 17 Mar 2012 08:47:48 +0100
 

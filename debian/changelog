@@ -7,6 +7,7 @@ volumeicon (0.5.1+git20170117-2) UNRELEASED; urgency=medium
   * Bump debhelper from old 10 to 12.
   * Set debhelper-compat version in Build-Depends.
   * Drop unnecessary dependency on dh-autoreconf.
+  * Drop unnecessary dh arguments: --parallel
 
  -- Debian Janitor <janitor@jelmer.uk>  Wed, 06 May 2020 00:24:43 +0000
 

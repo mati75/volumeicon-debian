@@ -1,4 +1,4 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Volume Icon
 Source: http://softwarebakery.com/maato/volumeicon.html
 
@@ -31,7 +31,7 @@ License: Expat
 
 Files: debian/*
 Copyright: 2011 Andrew Gainer <gainer.andrew@gmail.com>
-	   2013-2017 Mateusz Łukasik <mati75@linuxmint.pl>
+           2013-2017 Mateusz Łukasik <mati75@linuxmint.pl>
 License: GPL-3
 
 License: GPL-3

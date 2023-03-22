@@ -1,5 +1,6 @@
-volumeicon (0.5.1+git20170117-2) UNRELEASED; urgency=medium
+volumeicon (0.5.1+git20230228-1) UNRELEASED; urgency=medium
 
+  [ Debian Janitor ]
   * Trim trailing whitespace.
   * Use secure copyright file specification URI.
   * debian/copyright: use spaces rather than tabs to start continuation
@@ -8,6 +9,9 @@ volumeicon (0.5.1+git20170117-2) UNRELEASED; urgency=medium
   * Set debhelper-compat version in Build-Depends.
   * Drop unnecessary dependency on dh-autoreconf.
   * Drop unnecessary dh arguments: --parallel
+
+  [ Mateusz Łukasik ]
+  * New upstream snapshot.
 
  -- Debian Janitor <janitor@jelmer.uk>  Wed, 06 May 2020 00:24:43 +0000
 

@@ -13,6 +13,7 @@ volumeicon (0.5.1+git20230228-1) UNRELEASED; urgency=medium
   [ Mateusz Łukasik ]
   * New upstream snapshot.
   * Bump debhelper to 13.
+  * Bump Standards-Version to 4.6.2.
 
  -- Debian Janitor <janitor@jelmer.uk>  Wed, 06 May 2020 00:24:43 +0000
 

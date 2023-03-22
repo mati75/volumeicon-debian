@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Mateusz Łukasik <mati75@linuxmint.pl>
 Build-Depends: debhelper-compat (= 13), intltool,
  libgtk-3-dev, libasound2-dev, libnotify-dev
-Standards-Version: 4.0.0
+Standards-Version: 4.6.2
 Homepage: http://softwarebakery.com/maato/volumeicon.html
 Vcs-Git: https://github.com/mati75/volumeicon-debian.git
 Vcs-Browser: https://github.com/mati75/volumeicon-debian.git

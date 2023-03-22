@@ -1,3 +1,4 @@
-#watch control file for uscan
-version=3
-http://softwarebakery.com/maato/volumeicon.html files/volumeicon/volumeicon-(.+)\.tar\.gz debian uupdate
+version=4
+
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/volumeicon-$1\.tar\.gz/ \
+  https://github.com/Maato/volumeicon/tags .*/v?(\d\S*)\.tar\.gz

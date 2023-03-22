@@ -1,9 +1,9 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Volume Icon
-Source: http://softwarebakery.com/maato/volumeicon.html
+Source: https://github.com/Maato/volumeicon
 
 Files: *
-Copyright: Copyright 2010 Maato <maato@softwarebakery.com>
+Copyright: Copyright 2010-2023 Mart G <martg_@hotmail.com>
 License: GPL-3
 
 Files: src/keybinder.h src/bind.c
@@ -31,7 +31,7 @@ License: Expat
 
 Files: debian/*
 Copyright: 2011 Andrew Gainer <gainer.andrew@gmail.com>
-           2013-2017 Mateusz Łukasik <mati75@linuxmint.pl>
+           2013-2023 Mateusz Łukasik <mati75@linuxmint.pl>
 License: GPL-3
 
 License: GPL-3

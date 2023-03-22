@@ -1,31 +1,29 @@
-# Bosnian translations for volumeicon package.
-# Copyright (C) 2015 THE volumeicon'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the volumeicon package.
-# Dino Duratović <dinomol@mail.com>, 2015.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: volumeicon 0.5.1\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-02-16 18:28+0100\n"
-"PO-Revision-Date: 2015-06-11 18:12+0100\n"
-"Last-Translator: Dino Duratović <dinomol@mail.com>\n"
-"Language-Team: Bosnian\n"
-"Language: bs\n"
+"PO-Revision-Date: 2021-06-08 19:00+0300\n"
+"Last-Translator: Cihan Alkan <cihanalk@gmail.com>\n"
+"Language-Team: Aylinux <aylinux.org>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 3.0\n"
 
 #: ../data/gui/preferences.ui.h:1
 msgid "Preferences"
-msgstr "Postavke"
+msgstr "Tercihler"
 
 #: ../data/gui/preferences.ui.h:2
 msgid "Device"
-msgstr ""
+msgstr "Aygıt"
 
 #: ../data/gui/preferences.ui.h:3
 msgid "Channel"
@@ -33,139 +31,136 @@ msgstr "Kanal"
 
 #: ../data/gui/preferences.ui.h:4
 msgid "Linear Scale"
-msgstr ""
+msgstr "Doğrusal ölçek"
 
 #: ../data/gui/preferences.ui.h:5
 msgid "Logarithmic Scale"
-msgstr ""
+msgstr "Logaritmik ölçek"
 
 #: ../data/gui/preferences.ui.h:6
 msgid "<b>Alsa</b>"
 msgstr "<b>Alsa</b>"
 
 #: ../data/gui/preferences.ui.h:7
-#, fuzzy
 msgid "Channels"
-msgstr "Kanal"
+msgstr "Kanallar"
 
 #: ../data/gui/preferences.ui.h:8
 msgid "Icon Theme"
-msgstr "Tema ikona"
+msgstr "Simge Teması"
 
 #: ../data/gui/preferences.ui.h:9
 msgid "External mixer"
-msgstr "Eksterni mikser"
+msgstr "Harici karıştırıcı"
 
 #: ../data/gui/preferences.ui.h:10
 msgid "Volume adjustment"
-msgstr "Podešavanje glasnoće"
+msgstr "Ses ayarı"
 
 #: ../data/gui/preferences.ui.h:11
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../data/gui/preferences.ui.h:12
 msgid "Use panel-specific icons if available"
-msgstr ""
+msgstr "Varsa panele özel simgeleri kullanın"
 
 #: ../data/gui/preferences.ui.h:13
 msgid "Reverse scroll direction for volume adjustment"
-msgstr ""
+msgstr "Ses ayarı için ters kaydırma yönü"
 
 #: ../data/gui/preferences.ui.h:14
 msgid "<b>Status Icon</b>"
-msgstr "<b>Ikona stanja</b>"
+msgstr "<b>Durum Simgesi</b>"
 
 #: ../data/gui/preferences.ui.h:15
 msgid "Mute Volume"
-msgstr "Priguši zvuk"
+msgstr "Sesi Kapat"
 
 #: ../data/gui/preferences.ui.h:16
 msgid "Show Slider"
-msgstr "Prikaži klizač"
+msgstr "Kaydırıcıyı Göster"
 
 #: ../data/gui/preferences.ui.h:17
 msgid "<b>Left Mouse Button Action</b>"
-msgstr "<b>Lijevi klik miša</b>"
+msgstr "<b>Sol Fare Düğmesi İşlemi</b>"
 
 #: ../data/gui/preferences.ui.h:18 ../src/volumeicon.c:899
 msgid "Open Mixer"
-msgstr "Otvori mikser"
+msgstr "Karıştırıcı Açık"
 
 #: ../data/gui/preferences.ui.h:19
 msgid "<b>Middle Mouse Button Action</b>"
-msgstr "<b>Srednji klik miša</b>"
+msgstr "<b>Orta Fare Düğmesi İşlemi</b>"
 
 #: ../data/gui/preferences.ui.h:20
 msgid "Use Horizontal Slider"
-msgstr "Koristi horizontalni klizač"
+msgstr "Yatay Kaydırıcıyı Kullan"
 
 #: ../data/gui/preferences.ui.h:21
 msgid "Show Sound Level"
-msgstr "Prikaži nivo glasnoće"
+msgstr "Ses Seviyesini Göster"
 
 #: ../data/gui/preferences.ui.h:22
 msgid "Use Transparent Background (requires compositor)"
-msgstr "Koristi providnu pozadinu (potreban je kompozitor)"
+msgstr "Saydam Arka Planı Kullan (besteci gerektirir)"
 
 #: ../data/gui/preferences.ui.h:23
 msgid "<b>Layout Preferences</b>"
-msgstr "<b>Postavke izgleda</b>"
+msgstr "<b>Düzen Tercihleri</b>"
 
 #: ../data/gui/preferences.ui.h:24
-#, fuzzy
 msgid "Status Icon"
-msgstr "<b>Ikona stanja</b>"
+msgstr "Durum Simgesi"
 
 #: ../data/gui/preferences.ui.h:25
 msgid "<b>Hotkeys</b>"
-msgstr "<b>Prečice</b>"
+msgstr "<b>Kısayol Tuşları</b>"
 
 #: ../data/gui/preferences.ui.h:26
-#, fuzzy
 msgid "Hotkeys"
-msgstr "<b>Prečice</b>"
+msgstr "Kısayol Tuşları"
 
 #: ../data/gui/preferences.ui.h:27
 msgid "Show Notifications"
-msgstr ""
+msgstr "Bildirimleri Göster"
 
 #: ../data/gui/preferences.ui.h:28
 msgid "<b>On-Screen Notifications</b>"
-msgstr ""
+msgstr "<b>Ekran Bildirimleri</b>"
 
 #: ../data/gui/preferences.ui.h:29
 msgid "OSD"
-msgstr ""
+msgstr "OSD"
 
 #: ../src/volumeicon.c:625
 msgid "Volume Up"
-msgstr "Pojačaj"
+msgstr "Sesi Aç"
 
 #: ../src/volumeicon.c:629
 msgid "Volume Down"
-msgstr "Stišaj"
+msgstr "Sesi Kapat"
 
 #: ../src/volumeicon.c:633
 msgid "Mute"
-msgstr "Priguši zvuk"
+msgstr "Sessiz"
 
 #: ../src/volumeicon.c:640
 msgid "GTK+ Popup Window"
-msgstr ""
+msgstr "GTK+ Açılır Pencere"
 
 #: ../src/volumeicon.c:644
 msgid "libnotify"
-msgstr ""
+msgstr "libnotify"
 
 #: ../src/volumeicon.c:1313
 msgid "Alternate name to use for config file, default is volumeicon"
-msgstr "Alternativno ime za konfiguracioni fajl, standardno je volumeicon"
+msgstr "Yapılandırma dosyası için kullanılacak alternatif ad, varsayılan hacim simgesidir"
 
 #: ../src/volumeicon.c:1316
 msgid "Mixer device name"
-msgstr ""
+msgstr "Karıştırıcı cihaz adı"
 
 #: ../src/volumeicon.c:1318
 msgid "Output version number and exit"
-msgstr ""
+msgstr "Çıkış sürüm numarası ve çıkış"

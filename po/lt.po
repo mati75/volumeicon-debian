@@ -1,171 +1,167 @@
-# Bosnian translations for volumeicon package.
-# Copyright (C) 2015 THE volumeicon'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the volumeicon package.
-# Dino Duratović <dinomol@mail.com>, 2015.
+# Volumeicon Lithuanian translation.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Moo, 2017.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: volumeicon 0.5.1\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-16 18:28+0100\n"
-"PO-Revision-Date: 2015-06-11 18:12+0100\n"
-"Last-Translator: Dino Duratović <dinomol@mail.com>\n"
-"Language-Team: Bosnian\n"
-"Language: bs\n"
+"POT-Creation-Date: 2017-07-28 00:26+0300\n"
+"PO-Revision-Date: 2017-07-28 00:42+0300\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Last-Translator: Moo\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: lt\n"
 
 #: ../data/gui/preferences.ui.h:1
 msgid "Preferences"
-msgstr "Postavke"
+msgstr "Nuostatos"
 
 #: ../data/gui/preferences.ui.h:2
 msgid "Device"
-msgstr ""
+msgstr "Įrenginys"
 
 #: ../data/gui/preferences.ui.h:3
 msgid "Channel"
-msgstr "Kanal"
+msgstr "Kanalas"
 
 #: ../data/gui/preferences.ui.h:4
 msgid "Linear Scale"
-msgstr ""
+msgstr "Linijinė skalė"
 
 #: ../data/gui/preferences.ui.h:5
 msgid "Logarithmic Scale"
-msgstr ""
+msgstr "Logaritminė skalė"
 
 #: ../data/gui/preferences.ui.h:6
 msgid "<b>Alsa</b>"
 msgstr "<b>Alsa</b>"
 
 #: ../data/gui/preferences.ui.h:7
-#, fuzzy
 msgid "Channels"
-msgstr "Kanal"
+msgstr "Kanalai"
 
 #: ../data/gui/preferences.ui.h:8
 msgid "Icon Theme"
-msgstr "Tema ikona"
+msgstr "Piktogramų tema"
 
 #: ../data/gui/preferences.ui.h:9
 msgid "External mixer"
-msgstr "Eksterni mikser"
+msgstr "Išorinis maišiklis"
 
 #: ../data/gui/preferences.ui.h:10
 msgid "Volume adjustment"
-msgstr "Podešavanje glasnoće"
+msgstr "Garsio reguliavimas "
 
 #: ../data/gui/preferences.ui.h:11
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #: ../data/gui/preferences.ui.h:12
 msgid "Use panel-specific icons if available"
-msgstr ""
+msgstr "Jei prieinama, naudoti skydeliui specifines piktogramas"
 
 #: ../data/gui/preferences.ui.h:13
 msgid "Reverse scroll direction for volume adjustment"
-msgstr ""
+msgstr "Apversti garsio reguliavimo slinkimo kryptį"
 
 #: ../data/gui/preferences.ui.h:14
 msgid "<b>Status Icon</b>"
-msgstr "<b>Ikona stanja</b>"
+msgstr "<b>Būsenos piktograma</b>"
 
 #: ../data/gui/preferences.ui.h:15
 msgid "Mute Volume"
-msgstr "Priguši zvuk"
+msgstr "Nutildyti garsį"
 
 #: ../data/gui/preferences.ui.h:16
 msgid "Show Slider"
-msgstr "Prikaži klizač"
+msgstr "Rodyti slinktuką"
 
 #: ../data/gui/preferences.ui.h:17
 msgid "<b>Left Mouse Button Action</b>"
-msgstr "<b>Lijevi klik miša</b>"
+msgstr "<b>Kairiojo pelės mygtuko veiksmas</b>"
 
 #: ../data/gui/preferences.ui.h:18 ../src/volumeicon.c:899
 msgid "Open Mixer"
-msgstr "Otvori mikser"
+msgstr "Atverti maišiklį"
 
 #: ../data/gui/preferences.ui.h:19
 msgid "<b>Middle Mouse Button Action</b>"
-msgstr "<b>Srednji klik miša</b>"
+msgstr "<b>Viduriniojo pelės mygtuko veiksmas</b>"
 
 #: ../data/gui/preferences.ui.h:20
 msgid "Use Horizontal Slider"
-msgstr "Koristi horizontalni klizač"
+msgstr "Naudoti horizontalų slinktuką"
 
 #: ../data/gui/preferences.ui.h:21
 msgid "Show Sound Level"
-msgstr "Prikaži nivo glasnoće"
+msgstr "Rodyti garso lygį"
 
 #: ../data/gui/preferences.ui.h:22
 msgid "Use Transparent Background (requires compositor)"
-msgstr "Koristi providnu pozadinu (potreban je kompozitor)"
+msgstr "Naudoti permatomą foną (reikalauja tvarkytojo)"
 
 #: ../data/gui/preferences.ui.h:23
 msgid "<b>Layout Preferences</b>"
-msgstr "<b>Postavke izgleda</b>"
+msgstr "<b>Išdėstymo nuostatos</b>"
 
 #: ../data/gui/preferences.ui.h:24
-#, fuzzy
 msgid "Status Icon"
-msgstr "<b>Ikona stanja</b>"
+msgstr "Būsenos piktograma"
 
 #: ../data/gui/preferences.ui.h:25
 msgid "<b>Hotkeys</b>"
-msgstr "<b>Prečice</b>"
+msgstr "<b>Spartieji klavišai</b>"
 
 #: ../data/gui/preferences.ui.h:26
-#, fuzzy
 msgid "Hotkeys"
-msgstr "<b>Prečice</b>"
+msgstr "Spartieji klavišai"
 
 #: ../data/gui/preferences.ui.h:27
 msgid "Show Notifications"
-msgstr ""
+msgstr "Rodyti pranešimus"
 
 #: ../data/gui/preferences.ui.h:28
 msgid "<b>On-Screen Notifications</b>"
-msgstr ""
+msgstr "<b>Pranešimai ekrane</b>"
 
 #: ../data/gui/preferences.ui.h:29
 msgid "OSD"
-msgstr ""
+msgstr "OSD"
 
 #: ../src/volumeicon.c:625
 msgid "Volume Up"
-msgstr "Pojačaj"
+msgstr "Pagarsinti"
 
 #: ../src/volumeicon.c:629
 msgid "Volume Down"
-msgstr "Stišaj"
+msgstr "Patildyti"
 
 #: ../src/volumeicon.c:633
 msgid "Mute"
-msgstr "Priguši zvuk"
+msgstr "Nutildyti"
 
 #: ../src/volumeicon.c:640
 msgid "GTK+ Popup Window"
-msgstr ""
+msgstr "GTK+ iškylantysis langas"
 
 #: ../src/volumeicon.c:644
 msgid "libnotify"
-msgstr ""
+msgstr "libnotify"
 
 #: ../src/volumeicon.c:1313
 msgid "Alternate name to use for config file, default is volumeicon"
-msgstr "Alternativno ime za konfiguracioni fajl, standardno je volumeicon"
+msgstr "Alternatyvus pavadinimas, skirtas naudoti konfigūracijos failui, numatytasis yra volumeicon"
 
 #: ../src/volumeicon.c:1316
 msgid "Mixer device name"
-msgstr ""
+msgstr "Maišiklio įrenginio pavadinimas"
 
 #: ../src/volumeicon.c:1318
 msgid "Output version number and exit"
-msgstr ""
+msgstr "Išvesti versijos numerį ir išeiti"

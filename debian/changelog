@@ -1,4 +1,4 @@
-volumeicon (0.5.1+git20230228-1) UNRELEASED; urgency=medium
+volumeicon (0.5.1+git20230228-1) unstable; urgency=medium
 
   [ Debian Janitor ]
   * Trim trailing whitespace.
@@ -19,7 +19,7 @@ volumeicon (0.5.1+git20230228-1) UNRELEASED; urgency=medium
   * d/watch: update to github.
   * d/control: Add Rules-Requires-Root
 
- -- Debian Janitor <janitor@jelmer.uk>  Wed, 06 May 2020 00:24:43 +0000
+ -- Mateusz Łukasik <mati75@linuxmint.pl>  Wed, 22 Mar 2023 22:22:42 +0100
 
 volumeicon (0.5.1+git20170117-1) unstable; urgency=medium
 
